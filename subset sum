@@ -1,0 +1,85 @@
+/*
+    Time Complexity: O(N*K)
+    Space Complexity: O(N*K)
+
+    where 'N'is the length of the array 'A' and 'K' is the given sum.
+*/
+public class Solution {
+    public static boolean isSubsetPresent(int n, int k,int []a) {
+        // dp[i][j] is true if we can create 'A' subset sum of 'j' from first 'i' elements.
+        boolean [][]dp = new boolean[n + 1][];
+
+        // If 'K' is 0, then answer is true.
+        for (int i = 0; i <= n; i++)
+        {
+            dp[i] = new boolean[k + 1];
+            dp[i][0] = true;
+        }
+
+        // If 'K' ' is not 0 and 'N' is 0, the answer is false.
+        for (int i = 1; i <= k; i++)
+        {
+            dp[0][i] = false;
+        }
+
+        // Fill the table in bottom up manner.
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= k; j++)
+            {
+                if (j < a[i - 1])
+                {
+                    dp[i][j] = dp[i - 1][j];
+                }
+                else
+                {
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - a[i - 1]];
+                }
+            }
+        }
+
+        return dp[n][k];
+    }
+}/*
+    Time Complexity: O(N*K)
+    Space Complexity: O(N*K)
+
+    where 'N'is the length of the array 'A' and 'K' is the given sum.
+*/
+public class Solution {
+    public static boolean isSubsetPresent(int n, int k,int []a) {
+        // dp[i][j] is true if we can create 'A' subset sum of 'j' from first 'i' elements.
+        boolean [][]dp = new boolean[n + 1][];
+
+        // If 'K' is 0, then answer is true.
+        for (int i = 0; i <= n; i++)
+        {
+            dp[i] = new boolean[k + 1];
+            dp[i][0] = true;
+        }
+
+        // If 'K' ' is not 0 and 'N' is 0, the answer is false.
+        for (int i = 1; i <= k; i++)
+        {
+            dp[0][i] = false;
+        }
+
+        // Fill the table in bottom up manner.
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= k; j++)
+            {
+                if (j < a[i - 1])
+                {
+                    dp[i][j] = dp[i - 1][j];
+                }
+                else
+                {
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - a[i - 1]];
+                }
+            }
+        }
+
+        return dp[n][k];
+    }
+}
