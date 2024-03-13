@@ -1,21 +1,45 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 class Solution {
 
     static List<List<Integer>> ans;
-    static void helper(int arr[], int idx, int target, List<Integer> a){
-        if(target==0){
+
+    static void helper(int[] arr, int idx, int target, List<List<Integer>> ans, List<Integer> a) {
+        if (target == 0) {
             ans.add(new ArrayList<>(a));
             return;
         }
-        if(idx>=arr.length || target<0) return;
 
-        a.add(arr[idx]);
-        helper(arr,idx,target-arr[idx],a);
-        a.remove(a.size()-1);
-        helper(arr,idx+1,target,a);
+        if (target < 0 || idx >= arr.length)
+            return;
+
+        for (int i = idx; i < arr.length; i++) {
+            if (i > idx && arr[i] == arr[i - 1])
+                continue;
+            
+            if (arr[i] > target)
+                break;
+
+            a.add(arr[i]);
+            helper(arr, i + 1, target - arr[i], ans, a);
+            a.remove(a.size() - 1);
+        }
     }
-    public List<List<Integer>> combinationSum(int[] arr, int target) {
+
+    public List<List<Integer>> combinationSum2(int[] arr, int target) {
+        Arrays.sort(arr); // Sort the array to handle duplicates properly
         ans = new ArrayList<>();
-        helper(arr,0,target,new ArrayList<>());
+        helper(arr, 0, target, ans, new ArrayList<>());
         return ans;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[] arr = {10,1,2,7,6,1,5};
+        int target = 8;
+        List<List<Integer>> result = solution.combinationSum2(arr, target);
+        System.out.println(result);
     }
 }
